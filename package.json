@@ -1,0 +1,30 @@
+{
+  "name": "aplc-assignment-car-sales",
+  "version": "1.0. 0",
+  "description": "Functional Programming Car Sales Data Analysis System",
+  "main": "src/js/main.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/js/main.js",
+    "start-ts": "npx ts-node src/typescript/main.ts",
+    "test": "node src/js/test.js"
+  },
+  "dependencies": {
+    "csv-parser": "^3.0. 0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.0.0"
+  },
+  "keywords": [
+    "functional-programming",
+    "car-sales", 
+    "data-analysis",
+    "prolog",
+    "javascript",
+    "typescript"
+  ],
+  "author": "MinoriLuna",
+  "license": "MIT"
+}
