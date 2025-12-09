@@ -1,8 +1,7 @@
 import fs from 'fs';
 import csv from 'csv-parser';
 
-
-// => is used for function to ensure a cleaner and shorter code
+// => is used for function as well as lambda expressions
 // Higher-order function for filtering
 const filterBy = (criteria) => 
     (vehicles) => vehicles.filter(criteria);
@@ -43,54 +42,54 @@ const calculateStats = (vehicles) => vehicles.reduce((stats, vehicle) => ({
 const compose = (...functions) => (data) => 
     functions.reduceRight((result, fn) => fn(result), data);
 
-// MAIN ANALYSIS FUNCTION
+// Main Analysis Function
 const analyzeCarSales = (vehicleData) => {
-    console.log("CAR SALES FUNCTIONAL PROGRAMMING ANALYSIS");
-    console.log("==============================================");
+    console.log("Car Sales Data Analysis");
+    console.log("============================");
     
     // 1. Display all vehicles (Limit to first 5 to avoid spamming terminal)
-    console.log("\n PREVIEW OF VEHICLES (First 5):");
+    console.log("\n Vehicles Preview (First 5):");
     vehicleData.slice(0, 5).forEach(car => 
         console.log(`${car.Car_Name} (${car.Year}) - RM${car.Selling_Price.toLocaleString()} - ${car.Fuel_Type}`));
     
     // 2. Search vehicles in price range (0 - 300,000)
-    console.log("\n VEHICLES UNDER 300,000:");
+    console.log("\n Vehicles Under 300,000:");
     const affordableCars = filterBy(priceRange(0)(300000))(vehicleData);
     affordableCars.slice(0, 5).forEach(car => 
-        console.log(`  • ${car.Car_Name} - RM${car.Selling_Price.toLocaleString()}`));
+        console.log(`   ${car.Car_Name} - RM${car.Selling_Price.toLocaleString()}`));
     
     // 3. Count vehicles by fuel type
     const petrolCount = countBy(fuelType("Petrol"))(vehicleData);
     const dieselCount = countBy(fuelType("Diesel"))(vehicleData);
     
-    console.log("\n FUEL TYPE DISTRIBUTION:");
+    console.log("\n Fuel Type Distribution:");
     console.log(`  Petrol: ${petrolCount} vehicles`);
     console.log(`  Diesel: ${dieselCount} vehicles`);
     
     // 4. Sort vehicles by price
-    console.log("\n CHEAPEST VEHICLES (Top 3):");
+    console.log("\n Cheapest Vehicles (Top 3):");
     const sortedCars = sortByPrice(vehicleData);
     sortedCars.slice(0, 3).forEach(car => 
-        console.log(`  • ${car.Car_Name} - RM${car.Selling_Price.toLocaleString()}`));
+        console.log(` ${car.Car_Name} : RM${car.Selling_Price.toLocaleString()}`));
     
     // 5. Apply 10% markup
-    console.log("\n PRICES AFTER 10% MARKUP (Top 3):");
+    console.log("\n Prices After 10% Markup (Top 3):");
     const markedUpCars = applyMarkup(10)(vehicleData);
     markedUpCars.slice(0, 3).forEach(car => 
-        console.log(`  • ${car.Car_Name} - RM${car.Selling_Price.toLocaleString()}`));
+        console.log(`   ${car.Car_Name} : RM${car.Selling_Price.toLocaleString()}`));
     
     // 6. Statistics
     const stats = calculateStats(vehicleData);
     const averagePrice = stats.totalValue / stats.total;
     
-    console.log("\n STATISTICAL ANALYSIS:");
+    console.log("\n Statistical Analysis:");
     console.log(`  Total Vehicles: ${stats.total}`);
     console.log(`  Average Price: RM${Math.round(averagePrice).toLocaleString()}`);
     console.log(`  Highest Price: RM${stats.maxPrice.toLocaleString()}`);
     console.log(`  Lowest Price: RM${stats.minPrice.toLocaleString()}`);
     
     // 7. Composition Example
-    console.log("\n FUNCTION COMPOSITION EXAMPLE:");
+    console.log("\n Function Composition Example:");
     console.log("(Filter Diesel + Sort by Price + Take First 3)");
     
     const composedAnalysis = compose(

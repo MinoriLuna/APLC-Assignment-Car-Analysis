@@ -38,7 +38,7 @@ fs.createReadStream(csvFilePath)
         }
     })
     .on('end', () => {
-        writeStream.write("--End of Data--\n");
+        writeStream.write(" % --End of Data--\n");
         console.log(`Data written to: ${outputFilePath}`);
         writeStream.end();
     })

@@ -4338,4 +4338,3 @@ car(hyundai_i20_magna_1_4_crdi, 2014, 409999, 'diesel', 'manual').
 car(maruti_800_ac_bsiii, 2009, 110000, 'petrol', 'manual').
 car(hyundai_creta_1_6_crdi_sx_option, 2016, 865000, 'diesel', 'manual').
 car(renault_kwid_rxt, 2016, 225000, 'petrol', 'manual').
---End of Data--
