@@ -2,11 +2,12 @@ import fs from 'fs';
 import csv from 'csv-parser';
 
 // => is used for function as well as lambda expressions
-// Higher-order function for filtering
+// Higher-order function for filtering + Currying concept
 const filterBy = (criteria) => 
     (vehicles) => vehicles.filter(criteria);
 
 // Curried function for price range filtering (Applying Currying)
+// Also applies Closure and remembering min and max for usage later
 const priceRange = (min) => (max) => (vehicle) => 
     vehicle.Selling_Price >= min && vehicle.Selling_Price <= max;
 
@@ -14,7 +15,9 @@ const priceRange = (min) => (max) => (vehicle) =>
 const fuelType = (type) => 
     (vehicle) => vehicle.Fuel_Type === type;
 
-// Map function for applying markup (Applying Purity)
+// Map function for applying markup and spread operator (Applying Purity)
+// Using the .map function as well (Functional Programming)
+// .map transmutes all variables into different variable (Many to many) into selling price
 const applyMarkup = (percentage) => (vehicles) => 
     vehicles.map(vehicle => ({
         ...vehicle, 
@@ -22,15 +25,18 @@ const applyMarkup = (percentage) => (vehicles) =>
     }));
 
 // Sort function
+// Soriting in JS usually changes the orig array so using spread operator.
 // By applying ...vehicles we ensure purity by making a copy)
 const sortByPrice = (vehicles) => 
     [...vehicles].sort((a, b) => a.Selling_Price - b.Selling_Price);
 
-// Reduce for counting by criteria
+// Reduce for counting by criteria as well as HOF
+// It takes the criteria as input and adds 1 into the count every criteria met
 const countBy = (criteria) => (vehicles) => 
     vehicles.reduce((count, vehicle) => criteria(vehicle) ? count + 1 : count, 0);
 
 // Reduce for statistics
+// Reduce doing many calculation in one pass for efficiency
 const calculateStats = (vehicles) => vehicles.reduce((stats, vehicle) => ({
     total: stats.total + 1,
     totalValue: stats.totalValue + vehicle.Selling_Price,
@@ -38,7 +44,8 @@ const calculateStats = (vehicles) => vehicles.reduce((stats, vehicle) => ({
     minPrice: Math.min(stats.minPrice, vehicle.Selling_Price)
 }), {total: 0, totalValue: 0, maxPrice: 0, minPrice: Infinity});
 
-// Function composition helper
+// Function composition helper to combine multiple functions
+// such as sorting and slicing into one
 const compose = (...functions) => (data) => 
     functions.reduceRight((result, fn) => fn(result), data);
 
@@ -103,7 +110,7 @@ const loadFromCSV = () => {
     const results = [];
     // Reads the csv file
     fs.createReadStream('../data/CAR_DETAILS_FROM_CAR_DEKHO.csv') 
-        .pipe(csv()) //Makes the raw data into JS code
+        .pipe(csv()) //Connecting a readable stream into the CSV stream
         .on('data', (data) => { //Making all "string" into numbers
             results.push({
                 Car_Name: data.name,
@@ -115,7 +122,7 @@ const loadFromCSV = () => {
         })
         .on('end', () => { //Once its done, continue
             console.log("\n CSV Data loaded..");
-            console.log("================================================");
+            console.log("=========================");
             if (results.length > 0) {
                 analyzeCarSales(results); //Starts the analysis function
             } else {
@@ -127,4 +134,4 @@ const loadFromCSV = () => {
         });
 };
 
-loadFromCSV(); //Activates the function
+loadFromCSV(); 

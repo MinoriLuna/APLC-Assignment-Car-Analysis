@@ -21,7 +21,7 @@ fs.createReadStream(csvFilePath)
         try {
             const name = data.name
                 .toLowerCase()
-                .replace(/[^a-z0-9]/g, '_'); 
+                .replace(/[^a-z0-9]/g, '_'); //Using reges expression to replace with underscore, prolog is picky
             
             const year = parseInt(data.year);
             const price = parseInt(data.selling_price);
