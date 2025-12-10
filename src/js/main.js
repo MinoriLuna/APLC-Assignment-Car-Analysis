@@ -49,14 +49,12 @@ const analyzeCarSales = (vehicleData) => {
     
     // 1. Display all vehicles (Limit to first 5 to avoid spamming terminal)
     console.log("\n Vehicles Preview (First 5):");
-    vehicleData.slice(0, 5).forEach(car => 
-        console.log(`${car.Car_Name} (${car.Year}) - RM${car.Selling_Price.toLocaleString()} - ${car.Fuel_Type}`));
+    console.table(vehicleData.slice(0, 5));
     
     // 2. Search vehicles in price range (0 - 300,000)
     console.log("\n Vehicles Under 300,000:");
     const affordableCars = filterBy(priceRange(0)(300000))(vehicleData);
-    affordableCars.slice(0, 5).forEach(car => 
-        console.log(`   ${car.Car_Name} - RM${car.Selling_Price.toLocaleString()}`));
+    console.table(affordableCars.slice(0, 5));
     
     // 3. Count vehicles by fuel type
     const petrolCount = countBy(fuelType("Petrol"))(vehicleData);
@@ -69,14 +67,12 @@ const analyzeCarSales = (vehicleData) => {
     // 4. Sort vehicles by price
     console.log("\n Cheapest Vehicles (Top 3):");
     const sortedCars = sortByPrice(vehicleData);
-    sortedCars.slice(0, 3).forEach(car => 
-        console.log(` ${car.Car_Name} : RM${car.Selling_Price.toLocaleString()}`));
+    console.table(sortedCars.slice(0, 3));
     
     // 5. Apply 10% markup
     console.log("\n Prices After 10% Markup (Top 3):");
     const markedUpCars = applyMarkup(10)(vehicleData);
-    markedUpCars.slice(0, 3).forEach(car => 
-        console.log(`   ${car.Car_Name} : RM${car.Selling_Price.toLocaleString()}`));
+    console.table(markedUpCars.slice(0, 3));
     
     // 6. Statistics
     const stats = calculateStats(vehicleData);
@@ -99,8 +95,7 @@ const analyzeCarSales = (vehicleData) => {
     );
     
     const result = composedAnalysis(vehicleData);
-    result.forEach(car => 
-        console.log(`  • ${car.Car_Name} - RM${car.Selling_Price.toLocaleString()}`));
+    console.table(result);
 };
 
 // Load from CSV
